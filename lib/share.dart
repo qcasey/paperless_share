@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/services.dart';
 import 'model/auth.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class SharePage extends StatefulWidget {
   @override
@@ -15,6 +16,7 @@ class SharePage extends StatefulWidget {
 class _SharePageState extends State<SharePage> {
   StreamSubscription _intentDataStreamSubscription;
   List<SharedMediaFile> _sharedFiles;
+  bool _isActivelySharing = false;
   final AuthModel _auth = AuthModel();
 
   @override
@@ -26,7 +28,8 @@ class _SharePageState extends State<SharePage> {
         .listen((List<SharedMediaFile> value) {
       setState(() {
         _sharedFiles = value;
-        if (_sharedFiles != null && _sharedFiles.isNotEmpty) {
+        _isActivelySharing = _sharedFiles != null && _sharedFiles.isNotEmpty;
+        if (_isActivelySharing) {
           for (var f in _sharedFiles) {
             uploadFileToPaperless(f.path);
           }
@@ -40,7 +43,8 @@ class _SharePageState extends State<SharePage> {
     ReceiveSharingIntent.getInitialMedia().then((List<SharedMediaFile> value) {
       setState(() {
         _sharedFiles = value;
-        if (_sharedFiles != null && _sharedFiles.isNotEmpty) {
+        _isActivelySharing = _sharedFiles != null && _sharedFiles.isNotEmpty;
+        if (_isActivelySharing) {
           for (var f in _sharedFiles) {
             uploadFileToPaperless(f.path);
           }
@@ -93,55 +97,72 @@ class _SharePageState extends State<SharePage> {
 
   @override
   Widget build(BuildContext context) {
-    final _auth = Provider.of<AuthModel>(context, listen: true);
-
     return Scaffold(
         appBar: AppBar(
           title: Text("Paperless Share"),
-          actions: [
-            // action button
-            IconButton(
-              icon: Icon(Icons.logout),
-              tooltip: "Logout",
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: new Text("Logout?"),
-                        actions: [
-                          new FlatButton(
-                            child: new Text("Yes"),
-                            onPressed: () {
-                              _auth.logout();
-                              Navigator.pushReplacementNamed(context, "/login");
-                            },
-                          ),
-                          new FlatButton(
-                              child: new Text("No"),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              }),
-                        ],
-                      );
-                    });
-              },
-            ),
-          ],
+          actions: [_actionButton()],
         ),
         body: Center(
-            child: Align(
-                alignment: Alignment.topCenter,
-                child: SingleChildScrollView(
-                  padding: EdgeInsets.symmetric(vertical: 0),
-                  child: FractionallySizedBox(
-                      child: Column(
-                    children: <Widget>[
-                      _shareScreenExample(),
-                      _welcomeText(),
-                    ],
-                  )),
-                ))));
+          child: FractionallySizedBox(child: _bodyContent()),
+        ));
+  }
+
+  Widget _bodyContent() {
+    if (_isActivelySharing) {
+      return new Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        SpinKitRing(
+          color: Color(0xFF17541f),
+          size: 100.0,
+        )
+      ]);
+    }
+
+    return new Align(
+        alignment: Alignment.topCenter,
+        child: SingleChildScrollView(
+            child: Column(
+          children: <Widget>[
+            _shareScreenExample(),
+            _welcomeText(),
+          ],
+        )));
+  }
+
+  Widget _actionButton() {
+    final _auth = Provider.of<AuthModel>(context, listen: true);
+
+    if (_isActivelySharing) {
+      return new Container();
+    }
+
+    return // action button
+        IconButton(
+      icon: Icon(Icons.logout),
+      tooltip: "Logout",
+      onPressed: () {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: new Text("Logout?"),
+                actions: [
+                  new FlatButton(
+                    child: new Text("Yes"),
+                    onPressed: () {
+                      _auth.logout();
+                      Navigator.pushReplacementNamed(context, "/login");
+                    },
+                  ),
+                  new FlatButton(
+                      child: new Text("No"),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      }),
+                ],
+              );
+            });
+      },
+    );
   }
 
   Widget _welcomeText() {
