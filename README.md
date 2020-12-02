@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./demo/icon.png" width="450" />
+</p>
+
 # Paperless Share
 
 An Android app that bridges your document scanner with your [paperless-ng](https://github.com/jonaswinkler/paperless-ng) server.

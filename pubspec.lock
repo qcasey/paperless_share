@@ -121,10 +121,12 @@ packages:
   flutter_launcher_icons:
     dependency: "direct dev"
     description:
-      name: flutter_launcher_icons
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.8.1"
+      path: "."
+      ref: scaling
+      resolved-ref: f6b1b65722a021f557a3faaac2e802fe8eb3aaff
+      url: "https://github.com/knyghtryda/flutter_launcher_icons"
+    source: git
+    version: "0.7.5"
   flutter_string_encryption:
     dependency: transitive
     description:
