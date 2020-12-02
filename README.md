@@ -1,16 +1,31 @@
-# paperless_share
+# Paperless Share
 
-A new Flutter project.
+An Android app that bridges your document scanner with your [Paperless](https://github.com/jonaswinkler/paperless-ng) server.
+
+## Why?
+
+I like using extremely refined scanning apps such as [Office Lens](https://play.google.com/store/apps/details?id=com.microsoft.office.officelens&hl=en_US&gl=US) for documents. **Paperless Share** adds Paperless to the Android share sheet for easy consumption.
+
+It's similar in spirit to [TripleCamel](https://github.com/ebaschiera/TripleCamel), an app that does its job well and can be hidden from your launcher's app list.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Download [latest release](https://github.com/qcasey/paperless_share/releases/) or build from source.
 
-A few resources to get you started if this is your first Flutter project:
+I might publish on FDroid and Google Play Store, not sure yet.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Building
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Install [Flutter](https://flutter.dev/docs/get-started/install) and [integrate with your IDE of choice](https://flutter.dev/docs/get-started/editor?tab=vscode). A release can then be built and installed using:
+
+```bash
+flutter build appbundle
+flutter build apk --split-per-abi
+cd build/app/outputs/flutter-apk/
+flutter install
+```
+
+## TODO
+
+* Make PR to https://github.com/bauerj/paperless_app
+* Make error handling better and less not-existing
