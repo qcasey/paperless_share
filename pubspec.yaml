@@ -1,5 +1,5 @@
 name: paperless_share
-description: A new Flutter project.
+description: Share your documents with your Paperless server
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -91,4 +91,5 @@ flutter:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/icon.png"
+  image_path: "assets/icon-white.png"
+  adaptive_icon_background: "#17541f"
