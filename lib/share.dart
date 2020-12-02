@@ -6,7 +6,6 @@ import 'package:dio/dio.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/services.dart';
 import 'model/auth.dart';
-import 'login.dart';
 
 class SharePage extends StatefulWidget {
   @override
