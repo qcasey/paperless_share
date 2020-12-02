@@ -131,17 +131,18 @@ class _SharePageState extends State<SharePage> {
           ],
         ),
         body: Center(
-            child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(vertical: 50),
-          child: FractionallySizedBox(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              _shareScreenExample(),
-              _welcomeText(),
-            ],
-          )),
-        )));
+            child: Align(
+                alignment: Alignment.topCenter,
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.symmetric(vertical: 0),
+                  child: FractionallySizedBox(
+                      child: Column(
+                    children: <Widget>[
+                      _shareScreenExample(),
+                      _welcomeText(),
+                    ],
+                  )),
+                ))));
   }
 
   Widget _welcomeText() {
