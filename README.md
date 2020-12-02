@@ -1,10 +1,12 @@
 <p align="center">
-  <img src="./demo/icon.png" width="450" />
+  <img src="./demo/icon.png" width="150" />
 </p>
 
 # Paperless Share
 
 An Android app that bridges your document scanner with your [paperless-ng](https://github.com/jonaswinkler/paperless-ng) server.
+
+<img src="./demo/demo.gif" width="300" />
 
 ## Why?
 
@@ -23,6 +25,7 @@ I might publish on FDroid and Google Play Store, not sure yet.
 Install [Flutter](https://flutter.dev/docs/get-started/install) and [integrate with your IDE of choice](https://flutter.dev/docs/get-started/editor?tab=vscode). A release can then be built and installed using:
 
 ```bash
+flutter pub get
 flutter build appbundle
 flutter build apk --split-per-abi
 cd build/app/outputs/flutter-apk/
