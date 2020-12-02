@@ -150,9 +150,10 @@ class _SharePageState extends State<SharePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _paddedText("Ready to share with Paperless!"),
+            _paddedText("Ready to upload!"),
             _paddedText(
-                "Select PaperlessShare in the Share Menu to upload pictures and documents."),
+                "Select Paperless Share in the Share Menu to upload pictures and documents."),
+            _paddedText("Your server will begin processing it automatically."),
           ],
         ));
   }

@@ -99,7 +99,7 @@ class LoginFormState extends State<LoginForm> {
         child: RaisedButton(
           textColor: Colors.white,
           color: Color(0xFF17541f),
-          child: Text('Start'),
+          child: Text('Login'),
           onPressed: () async {
             if (_formKey.currentState.validate()) {
               Scaffold.of(context)
