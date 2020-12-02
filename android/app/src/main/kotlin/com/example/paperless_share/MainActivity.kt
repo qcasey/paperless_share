@@ -1,4 +1,4 @@
-package com.example.paperless_share
+package com.quinncasey.paperless_share
 
 import io.flutter.embedding.android.FlutterActivity
 
