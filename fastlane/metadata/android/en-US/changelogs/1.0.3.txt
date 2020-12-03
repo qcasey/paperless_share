@@ -1,0 +1,2 @@
+* Complied with Fastlane meta structure
+* Bump version number
