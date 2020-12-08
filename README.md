@@ -4,6 +4,10 @@
 
 # Paperless Share
 
+[<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"
+     alt="Get it on Google Play"
+     height="80">](https://play.google.com/store/apps/details?id=com.quinncasey.paperless_share)
+     
 An Android app that bridges your document scanner with your [paperless-ng](https://github.com/jonaswinkler/paperless-ng) server.
 
 <img src="./demo/demo.gif" width="300" />
@@ -16,9 +20,11 @@ It's similar in spirit to [TripleCamel](https://github.com/ebaschiera/TripleCame
 
 ## Getting Started
 
+### Android
+
 Download [latest release](https://github.com/qcasey/paperless_share/releases/) or build from source.
 
-I might publish on FDroid and Google Play Store, not sure yet.
+FDroid release is [waiting to be merged](https://gitlab.com/fdroid/fdroiddata/-/merge_requests/7828).
 
 ## Building
 
