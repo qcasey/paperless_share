@@ -1,0 +1,3 @@
+I like using extremely refined scanning apps such as Office Lens for documents. <i>Paperless Share</i> adds Paperless to the Android share sheet for easy consumption. It's similar in spirit to TripleCamel.
+
+This app requires a <a href='https://github.com/jonaswinkler/paperless-ng' target='_blank' rel='nofollow'>paperless-ng</a> server instance, which you can host yourself for free.
