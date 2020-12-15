@@ -1,0 +1,4 @@
+* Uses token auth for safer credential storage.
+* Allow autofilling login form.
+* Uses proper fastlane structure.
+* Updated server requirements.
