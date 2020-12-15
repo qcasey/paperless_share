@@ -1,0 +1,19 @@
+{
+  "View": "Ansicht",
+  "Server is required": "Server ist erforderlich",
+  "Server must be a valid URL": "Der Server muss eine gültige URL sein",
+  "Username is required": "Benutzername wird benötigt",
+  "Password is required": "Passwort wird benötigt",
+  "Error while connecting to server: ": "Fehler beim Verbindungsaufbau",
+  "Settings": "Einstellungen",
+  "Checking credentials...": "Anmeldedaten werden überprüft...",
+  "Username": "Nutzername",
+  "Password": "Passwort",
+  "Login": "Login",
+  "File uploaded": "Datei hochgeladen",
+  "Cancel": "Abbrechen",
+  "Okay": "Okay",
+  "Ready to upload": "Bereit zum Hochladen",
+  "Select Paperless Share in the Share Menu to upload pictures and documents": "Wählen Sie im Menü \"Freigeben\" die Option \"Papierlose Freigabe\", um Bilder und Dokumente hochzuladen.",
+  "Your server will begin processing it automatically": "Ihr Server beginnt automatisch mit der Verarbeitung"
+}

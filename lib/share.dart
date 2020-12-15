@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/services.dart';
 import 'model/auth.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import './class/i18n.dart';
 
 class SharePage extends StatefulWidget {
   @override
@@ -69,7 +70,7 @@ class _SharePageState extends State<SharePage> {
 
     if (response.statusCode == 200) {
       Fluttertoast.showToast(
-        msg: "File uploaded.",
+        msg: "File uploaded.".i18n,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,
@@ -144,14 +145,14 @@ class _SharePageState extends State<SharePage> {
                 title: new Text("Logout?"),
                 actions: [
                   new FlatButton(
-                    child: new Text("Yes"),
+                    child: new Text("Okay".i18n),
                     onPressed: () {
                       _auth.logout();
                       Navigator.pushReplacementNamed(context, "/login");
                     },
                   ),
                   new FlatButton(
-                      child: new Text("No"),
+                      child: new Text("Cancel".i18n),
                       onPressed: () {
                         Navigator.of(context).pop();
                       }),
@@ -168,10 +169,12 @@ class _SharePageState extends State<SharePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _paddedText("Ready to upload!"),
+            _paddedText("Ready to upload!".i18n),
             _paddedText(
-                "Select Paperless Share in the Share Menu to upload pictures and documents."),
-            _paddedText("Your server will begin processing it automatically."),
+                "Select Paperless Share in the Share Menu to upload pictures and documents."
+                    .i18n),
+            _paddedText(
+                "Your server will begin processing it automatically.".i18n),
           ],
         ));
   }

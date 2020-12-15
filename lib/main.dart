@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:i18n_extension/i18n_widget.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'class/i18n.dart';
 import 'model/auth.dart';
 import 'login.dart';
 import 'share.dart';
@@ -49,6 +52,7 @@ class _PaperlessShareState extends State<PaperlessShare> {
 
   @override
   Widget build(BuildContext context) {
+    MyI18n.loadTranslations(context);
     return MultiProvider(
         providers: [
           ChangeNotifierProvider<AuthModel>.value(value: _auth),
@@ -66,11 +70,21 @@ class _PaperlessShareState extends State<PaperlessShare> {
             brightness: Brightness.dark,
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
-          home: Consumer<AuthModel>(builder: (context, model, child) {
+          home:
+              I18n(child: Consumer<AuthModel>(builder: (context, model, child) {
             if (model?.user != null && model?.user.isValid())
               return SharePage();
             return LoginPage();
-          }),
+          })),
+          localizationsDelegates: [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: [
+            const Locale('en', "US"),
+            const Locale('de', "DE"),
+          ],
           routes: {
             '/login': (context) => new LoginPage(),
             '/share': (context) => new SharePage(),

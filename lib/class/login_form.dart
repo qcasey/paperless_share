@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:regexed_validator/regexed_validator.dart';
+import './i18n.dart';
 import '../model/auth.dart';
-import '../share.dart';
 
 // Define a custom Form widget.
 class LoginForm extends StatefulWidget {
@@ -38,10 +38,10 @@ class LoginFormState extends State<LoginForm> {
               controller: serverController,
               validator: (value) {
                 if (value.isEmpty) {
-                  return 'Server is required.';
+                  return 'Server is required.'.i18n;
                 }
                 if (!validator.url(value)) {
-                  return 'Server must be a valid URL.';
+                  return 'Server must be a valid URL.'.i18n;
                 }
                 return null;
               },
@@ -60,12 +60,12 @@ class LoginFormState extends State<LoginForm> {
                 controller: usernameController,
                 validator: (value) {
                   if (value.isEmpty) {
-                    return 'Username is required.';
+                    return 'Username is required.'.i18n;
                   }
                   return null;
                 },
                 decoration: new InputDecoration(
-                  labelText: 'Username',
+                  labelText: 'Username'.i18n,
                   contentPadding:
                       EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 ),
@@ -77,12 +77,12 @@ class LoginFormState extends State<LoginForm> {
                 controller: passwordController,
                 validator: (value) {
                   if (value.isEmpty) {
-                    return 'Password is required.';
+                    return 'Password is required.'.i18n;
                   }
                   return null;
                 },
                 decoration: new InputDecoration(
-                  labelText: 'Password',
+                  labelText: 'Password'.i18n,
                   contentPadding:
                       EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 ),
@@ -107,8 +107,8 @@ class LoginFormState extends State<LoginForm> {
           child: Text('Login'),
           onPressed: () async {
             if (_formKey.currentState.validate()) {
-              Scaffold.of(context)
-                  .showSnackBar(SnackBar(content: Text('Logging in...')));
+              Scaffold.of(context).showSnackBar(
+                  SnackBar(content: Text('Checking credentials...'.i18n)));
 
               _auth
                   .login(
@@ -122,7 +122,8 @@ class LoginFormState extends State<LoginForm> {
                 } else {
                   print(loginError);
                   Scaffold.of(context).showSnackBar(SnackBar(
-                      content: Text('Failed to login: ' + loginError)));
+                      content: Text('Error while connecting to server: '.i18n +
+                          loginError)));
                 }
               });
             }

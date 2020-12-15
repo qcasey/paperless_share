@@ -127,6 +127,11 @@ packages:
       url: "https://github.com/knyghtryda/flutter_launcher_icons"
     source: git
     version: "0.7.5"
+  flutter_localizations:
+    dependency: "direct main"
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_spinkit:
     dependency: "direct main"
     description:
@@ -172,6 +177,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.4"
+  i18n_extension:
+    dependency: "direct main"
+    description:
+      name: i18n_extension
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.4.5"
   image:
     dependency: transitive
     description:
@@ -338,6 +350,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0-nullsafety.2"
+  sprintf:
+    dependency: "direct main"
+    description:
+      name: sprintf
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.1.0"
   stack_trace:
     dependency: transitive
     description:
