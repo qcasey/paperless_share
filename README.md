@@ -37,8 +37,3 @@ flutter build apk --split-per-abi
 cd build/app/outputs/flutter-apk/
 flutter install
 ```
-
-## TODO
-
-* Make PR to https://github.com/bauerj/paperless_app
-* Make error handling better and less not-existing
