@@ -52,39 +52,44 @@ class LoginFormState extends State<LoginForm> {
                   labelText: 'Server'),
             ),
           ),
-          new Container(
-            child: new TextFormField(
-              controller: usernameController,
-              validator: (value) {
-                if (value.isEmpty) {
-                  return 'Username is required.';
-                }
-                return null;
-              },
-              decoration: new InputDecoration(
-                labelText: 'Username',
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          new AutofillGroup(
+              child: Column(children: <Widget>[
+            new Container(
+              child: new TextFormField(
+                autofillHints: [AutofillHints.username],
+                controller: usernameController,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Username is required.';
+                  }
+                  return null;
+                },
+                decoration: new InputDecoration(
+                  labelText: 'Username',
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                ),
               ),
             ),
-          ),
-          new Container(
-            child: new TextFormField(
-              controller: passwordController,
-              validator: (value) {
-                if (value.isEmpty) {
-                  return 'Password is required.';
-                }
-                return null;
-              },
-              decoration: new InputDecoration(
-                labelText: 'Password',
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            new Container(
+              child: new TextFormField(
+                autofillHints: [AutofillHints.password],
+                controller: passwordController,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Password is required.';
+                  }
+                  return null;
+                },
+                decoration: new InputDecoration(
+                  labelText: 'Password',
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                ),
+                obscureText: true,
               ),
-              obscureText: true,
-            ),
-          )
+            )
+          ]))
         ],
       ),
     );
@@ -111,15 +116,11 @@ class LoginFormState extends State<LoginForm> {
                       username: usernameController.text,
                       password: passwordController.text)
                   .then((loginError) {
-                print(loginError);
-                print(serverController.text);
-                print(usernameController.text);
-                print(passwordController.text);
-
                 if (loginError == "") {
                   Navigator.pushNamedAndRemoveUntil(
                       context, "/share", (_) => false);
                 } else {
+                  print(loginError);
                   Scaffold.of(context).showSnackBar(SnackBar(
                       content: Text('Failed to login: ' + loginError)));
                 }
