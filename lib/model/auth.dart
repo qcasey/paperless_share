@@ -1,29 +1,24 @@
-import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 
 class User {
   User({
     this.server,
-    this.username,
-    this.password,
+    this.token,
   });
 
   final String server;
-  final String username;
-  final String password;
+  final String token;
 
   @override
   String toString() {
-    return "$username@$server $password".toString();
+    return "$token@$server".toString();
   }
 
   bool isValid() {
-    return (this.server.isNotEmpty &&
-        this.username.isNotEmpty &&
-        this.password.isNotEmpty);
+    return (this.server.isNotEmpty && this.token.isNotEmpty);
   }
 
   String formatRoute(String route) {
@@ -37,8 +32,7 @@ class User {
   }
 
   String formatBasicAuth() {
-    String basicAuth = 'Basic ' +
-        base64Encode(utf8.encode(this.username + ':' + this.password));
+    String basicAuth = 'Token ' + this.token;
     return basicAuth;
   }
 }
@@ -48,7 +42,7 @@ class AuthModel extends ChangeNotifier {
   User _user;
 
   void loadSettings() async {
-    var _prefs = await EncryptedSharedPreferences();
+    var _prefs = EncryptedSharedPreferences();
 
     User _savedUser;
     try {
@@ -56,8 +50,7 @@ class AuthModel extends ChangeNotifier {
       print("Saved: $_saved");
       _savedUser = User(
           server: await _prefs.getString("saved_server"),
-          username: await _prefs.getString("saved_username"),
-          password: await _prefs.getString("saved_password"));
+          token: await _prefs.getString("saved_token"));
     } catch (e) {
       print("User Not Found: $e");
     }
@@ -78,23 +71,20 @@ class AuthModel extends ChangeNotifier {
     String _password = password;
 
     print("Logging In => $_username, $_password at $_server");
-    User _newUser =
-        User(password: _password, username: _username, server: _server);
+    User _newUser = User(server: _server);
 
-    var response = await http.get(_newUser.formatRoute('api/documents/'),
-        headers: <String, String>{'authorization': _newUser.formatBasicAuth()});
-    print(response.statusCode);
-    print(response.body);
+    var response = await Dio().post(_newUser.formatRoute('api/token/'),
+        data: {"username": username, "password": password});
 
     if (response.statusCode == 200) {
+      Map responseBody = response.data;
       EncryptedSharedPreferences prefs = EncryptedSharedPreferences();
       await prefs.setString("saved_server", _server);
-      await prefs.setString("saved_username", _username);
-      await prefs.setString("saved_password", _password);
+      await prefs.setString("saved_token", responseBody["token"]);
 
       return "";
     } else {
-      return response.body;
+      return response.data;
     }
   }
 

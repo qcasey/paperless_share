@@ -19,6 +19,14 @@ class _SharePageState extends State<SharePage> {
   bool _isActivelySharing = false;
   final AuthModel _auth = AuthModel();
 
+  void uploadDocuments() {
+    if (_isActivelySharing) {
+      for (var f in _sharedFiles) {
+        uploadFileToPaperless(f.path);
+      }
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -29,12 +37,8 @@ class _SharePageState extends State<SharePage> {
       setState(() {
         _sharedFiles = value;
         _isActivelySharing = _sharedFiles != null && _sharedFiles.isNotEmpty;
-        if (_isActivelySharing) {
-          for (var f in _sharedFiles) {
-            uploadFileToPaperless(f.path);
-          }
-        }
       });
+      uploadDocuments();
     }, onError: (err) {
       print("getIntentDataStream error: $err");
     });
@@ -44,12 +48,8 @@ class _SharePageState extends State<SharePage> {
       setState(() {
         _sharedFiles = value;
         _isActivelySharing = _sharedFiles != null && _sharedFiles.isNotEmpty;
-        if (_isActivelySharing) {
-          for (var f in _sharedFiles) {
-            uploadFileToPaperless(f.path);
-          }
-        }
       });
+      uploadDocuments();
     });
   }
 
@@ -66,9 +66,6 @@ class _SharePageState extends State<SharePage> {
         options: RequestOptions(headers: <String, String>{
           'authorization': _auth.user.formatBasicAuth()
         }));
-
-    print(response.statusCode);
-    print(response.data);
 
     if (response.statusCode == 200) {
       Fluttertoast.showToast(
