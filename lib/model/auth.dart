@@ -27,7 +27,6 @@ class User {
       url = url + '/';
     }
     // Append route
-    print(url + route);
     return url + route;
   }
 
@@ -46,8 +45,6 @@ class AuthModel extends ChangeNotifier {
 
     User _savedUser;
     try {
-      String _saved = await _prefs.getString("user_data");
-      print("Saved: $_saved");
       _savedUser = User(
           server: await _prefs.getString("saved_server"),
           token: await _prefs.getString("saved_token"));
