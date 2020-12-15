@@ -20,6 +20,10 @@ It's similar in spirit to [TripleCamel](https://github.com/ebaschiera/TripleCame
 
 ## Getting Started
 
+### Requirements
+
+This app built for [paperless-ng](https://github.com/jonaswinkler/paperless-ng) version 0.9.5 or higher.
+
 ### Android
 
 Download [latest release](https://github.com/qcasey/paperless_share/releases/) or build from source.
