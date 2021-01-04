@@ -4,6 +4,9 @@
 
 # Paperless Share
 
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
+     alt="Get it on F-Droid"
+     height="80">](https://f-droid.org/packages/com.quinncasey.paperless_share/)
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"
      alt="Get it on Google Play"
      height="80">](https://play.google.com/store/apps/details?id=com.quinncasey.paperless_share)
@@ -26,9 +29,14 @@ This app built for [paperless-ng](https://github.com/jonaswinkler/paperless-ng) 
 
 ### Android
 
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
+     alt="Get it on F-Droid"
+     height="80">](https://f-droid.org/packages/com.quinncasey.paperless_share/)
+[<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"
+     alt="Get it on Google Play"
+     height="80">](https://play.google.com/store/apps/details?id=com.quinncasey.paperless_share)
+     
 Download [latest release](https://github.com/qcasey/paperless_share/releases/) or build from source.
-
-FDroid release is [waiting to be merged](https://gitlab.com/fdroid/fdroiddata/-/merge_requests/7828).
 
 ## Building
 
