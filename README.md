@@ -25,7 +25,7 @@ It's similar in spirit to [TripleCamel](https://github.com/ebaschiera/TripleCame
 
 ### Requirements
 
-This app built for [paperless-ng](https://github.com/jonaswinkler/paperless-ng) version 0.9.5 or higher.
+This app requires [paperless-ng](https://github.com/jonaswinkler/paperless-ng) version 0.9.5 or higher.
 
 ### Android
 
