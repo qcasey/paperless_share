@@ -54,7 +54,7 @@ class _SharePageState extends State<SharePage> {
   }
 
   void uploadFileToPaperless(String path) async {
-    final _auth = Provider.of<AuthModel>(context, listen: true);
+    final _auth = Provider.of<AuthModel>(context, listen: false);
     print("Uploading " + path + " to " + _auth.user.server);
 
     var formData = FormData.fromMap({
