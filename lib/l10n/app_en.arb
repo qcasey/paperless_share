@@ -1,0 +1,16 @@
+{
+    "yes": "Yes",
+    "no": "No",
+    "logout": "Logout?",
+    "login": "Login",
+    "loggingIn": "Logging in...",
+    "loginFailed": "Failed to login: ",
+    "username": "Username",
+    "password": "Password",
+    "server": "Server",
+    "fieldRequired": "Required.",
+    "fileUploaded": "File uploaded.",
+    "readyToUpload": "Ready to upload!",
+    "shareInstructions": "Select Paperless Share in the Share Menu to upload pictures and documents",
+    "serverInstructions": "Your server will attempt to process it automatically. It should appear within a few moments."
+}

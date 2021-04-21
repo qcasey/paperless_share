@@ -1,0 +1,16 @@
+{
+    "yes": "Ja",
+    "no": "Nein",
+    "logout": "Ausloggen?",
+    "login": "Anmeldung",
+    "loggingIn": "Einloggen...",
+    "loginFailed": "Einloggen fehlgeschlagen: ",
+    "username": "Nutzername",
+    "password": "Passwort",
+    "server": "Server",
+    "fieldRequired": "Erforderlich.",
+    "fileUploaded": "Datei hochgeladen.",
+    "readyToUpload": "Bereit zum Hochladen.",
+    "shareInstructions": "Wählen Sie im Menü \"Freigeben\" die Option \"Paperless Share\", um Bilder und Dokumente hochzuladen.",
+    "serverInstructions": "Ihr Server wird versuchen, es automatisch zu verarbeiten. Es sollte in wenigen Augenblicken erscheinen."
+}

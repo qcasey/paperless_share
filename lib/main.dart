@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'model/auth.dart';
 import 'login.dart';
 import 'share.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
   runApp(PaperlessShare());
@@ -75,6 +77,16 @@ class _PaperlessShareState extends State<PaperlessShare> {
             '/login': (context) => new LoginPage(),
             '/share': (context) => new SharePage(),
           },
+          localizationsDelegates: [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: [
+            const Locale('en', ''),
+            const Locale('de', ''),
+          ],
         ));
   }
 }

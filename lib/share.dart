@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/services.dart';
 import 'model/auth.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SharePage extends StatefulWidget {
   @override
@@ -69,7 +70,7 @@ class _SharePageState extends State<SharePage> {
 
     if (response.statusCode == 200) {
       Fluttertoast.showToast(
-        msg: "File uploaded.",
+        msg: AppLocalizations.of(context).fileUploaded,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,
@@ -141,17 +142,17 @@ class _SharePageState extends State<SharePage> {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                title: new Text("Logout?"),
+                title: new Text(AppLocalizations.of(context).logout),
                 actions: [
                   new FlatButton(
-                    child: new Text("Yes"),
+                    child: new Text(AppLocalizations.of(context).yes),
                     onPressed: () {
                       _auth.logout();
                       Navigator.pushReplacementNamed(context, "/login");
                     },
                   ),
                   new FlatButton(
-                      child: new Text("No"),
+                      child: new Text(AppLocalizations.of(context).no),
                       onPressed: () {
                         Navigator.of(context).pop();
                       }),
@@ -168,11 +169,9 @@ class _SharePageState extends State<SharePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _paddedText("Ready to upload!"),
-            _paddedText(
-                "Select Paperless Share in the Share Menu to upload pictures and documents."),
-            _paddedText(
-                "Your server will attempt to process it automatically. It should appear within a few moments."),
+            _paddedText(AppLocalizations.of(context).readyToUpload),
+            _paddedText(AppLocalizations.of(context).shareInstructions),
+            _paddedText(AppLocalizations.of(context).serverInstructions),
           ],
         ));
   }
