@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:regexed_validator/regexed_validator.dart';
 import '../model/auth.dart';
-import '../share.dart';
 
 // Define a custom Form widget.
 class LoginForm extends StatefulWidget {
