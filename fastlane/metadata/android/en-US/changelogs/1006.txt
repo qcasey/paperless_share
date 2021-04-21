@@ -1,0 +1,6 @@
+* Fix unnecessarily strict checking of server name (#5)
+* Add localization support
+* Add rough German translation
+* Update processing information text
+* Update dependencies
+* Allow cleartext traffic in AndroidManifest.xml for connecting to local servers
