@@ -63,7 +63,7 @@ class _SharePageState extends State<SharePage> {
     var response = await Dio().post(
         _auth.user.formatRoute('api/documents/post_document/'),
         data: formData,
-        options: RequestOptions(headers: <String, String>{
+        options: Options(headers: <String, String>{
           'authorization': _auth.user.formatBasicAuth()
         }));
 
