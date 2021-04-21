@@ -40,9 +40,6 @@ class LoginFormState extends State<LoginForm> {
                 if (value.isEmpty) {
                   return 'Server is required.';
                 }
-                if (!validator.url(value)) {
-                  return 'Server must be a valid URL.';
-                }
                 return null;
               },
               decoration: new InputDecoration(
