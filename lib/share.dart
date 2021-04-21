@@ -171,7 +171,8 @@ class _SharePageState extends State<SharePage> {
             _paddedText("Ready to upload!"),
             _paddedText(
                 "Select Paperless Share in the Share Menu to upload pictures and documents."),
-            _paddedText("Your server will begin processing it automatically."),
+            _paddedText(
+                "Your server will attempt to process it automatically. It should appear within a few moments."),
           ],
         ));
   }
