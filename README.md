@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./demo/icon.png" width="150" />
+  <img src="https://github.com/qcasey/paperless_share/raw/main/demo/icon.png" width="150" />
 </p>
 
 # Paperless Share
@@ -13,7 +13,7 @@
      
 An Android app that bridges your document scanner with your [paperless-ng](https://github.com/jonaswinkler/paperless-ng) server.
 
-<img src="./demo/demo.gif" width="300" />
+<img src="https://github.com/qcasey/paperless_share/raw/main/demo/demo.gif" width="300" />
 
 ## Why?
 
