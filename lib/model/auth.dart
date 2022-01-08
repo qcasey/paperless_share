@@ -67,7 +67,7 @@ class AuthModel extends ChangeNotifier {
     String _username = username;
     String _password = password;
 
-    print("Logging In => $_username, $_password at $_server");
+    print("Logging In => $_username at $_server");
     User _newUser = User(server: _server);
 
     var response = await Dio().post(_newUser.formatRoute('api/token/'),
