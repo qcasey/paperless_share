@@ -293,7 +293,7 @@ packages:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.0.0"
+    version: "6.0.2"
   receive_sharing_intent:
     dependency: "direct main"
     description:
@@ -307,7 +307,7 @@ packages:
       name: regexed_validator
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.4"
+    version: "2.0.0+1"
   shared_preferences:
     dependency: transitive
     description:

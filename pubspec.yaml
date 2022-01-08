@@ -29,8 +29,8 @@ dependencies:
   intl: ^0.17.0
   encrypted_shared_preferences: ^3.0.0
   http: ^0.13.1
-  provider: ^5.0.0
-  regexed_validator: ^1.0.4
+  provider: ^6.0.2
+  regexed_validator: ^2.0.0+1
   receive_sharing_intent: ^1.4.2
   dio: ^4.0.0
   fluttertoast: ^8.0.6
