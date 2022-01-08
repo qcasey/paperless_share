@@ -1,13 +1,15 @@
+import 'dart:async';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:receive_sharing_intent/receive_sharing_intent.dart';
-import 'dart:async';
-import 'package:dio/dio.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:flutter/services.dart';
+
 import 'model/auth.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SharePage extends StatefulWidget {
   @override
@@ -16,9 +18,9 @@ class SharePage extends StatefulWidget {
 
 class _SharePageState extends State<SharePage> {
   StreamSubscription _intentDataStreamSubscription;
+  static const methodChannel = MethodChannel('app.channel.shared.data');
   List<SharedMediaFile> _sharedFiles;
   bool _isActivelySharing = false;
-  final AuthModel _auth = AuthModel();
 
   void uploadDocuments() {
     if (_isActivelySharing) {
@@ -31,7 +33,11 @@ class _SharePageState extends State<SharePage> {
   @override
   void initState() {
     super.initState();
+    handleSharedFile();
+    handleOpenWithFile();
+  }
 
+  void handleSharedFile() {
     // For sharing images coming from outside the app while the app is in the memory
     _intentDataStreamSubscription = ReceiveSharingIntent.getMediaStream()
         .listen((List<SharedMediaFile> value) {
@@ -54,6 +60,13 @@ class _SharePageState extends State<SharePage> {
     });
   }
 
+  void handleOpenWithFile() async {
+    var sharedData = await methodChannel.invokeMethod('getFilePath');
+    if (sharedData != null) {
+      uploadFileToPaperless(sharedData);
+    }
+  }
+
   void uploadFileToPaperless(String path) async {
     final _auth = Provider.of<AuthModel>(context, listen: false);
     print("Uploading " + path + " to " + _auth.user.server);
@@ -61,12 +74,17 @@ class _SharePageState extends State<SharePage> {
     var formData = FormData.fromMap({
       "document": await MultipartFile.fromFile(path),
     });
-    var response = await Dio().post(
-        _auth.user.formatRoute('api/documents/post_document/'),
-        data: formData,
-        options: Options(headers: <String, String>{
-          'authorization': _auth.user.formatBasicAuth()
-        }));
+    Response response;
+    try {
+      response = await Dio().post(
+          _auth.user.formatRoute('api/documents/post_document/'),
+          data: formData,
+          options: Options(headers: <String, String>{
+            'authorization': _auth.user.formatBasicAuth()
+          }));
+    } on DioError catch (e) {
+      response = e.response;
+    }
 
     if (response.statusCode == 200) {
       Fluttertoast.showToast(
@@ -77,7 +95,7 @@ class _SharePageState extends State<SharePage> {
       );
     } else {
       Fluttertoast.showToast(
-        msg: response.data,
+        msg: response.data.toString(),
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,
