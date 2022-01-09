@@ -137,8 +137,8 @@ packages:
     description:
       path: "."
       ref: master
-      resolved-ref: "0ee2e327b2d37ea3ac52f7f0af53b35e72675f73"
-      url: "https://github.com/nbonamy/flutter_handle_file"
+      resolved-ref: "35e7104ab8c4c3a747b1c752afcaf00a780bff54"
+      url: "https://github.com/NiFNi/flutter_handle_file"
     source: git
     version: "0.2.0"
   flutter_launcher_icons:

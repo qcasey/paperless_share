@@ -37,7 +37,7 @@ dependencies:
   flutter_spinkit: ^5.0.0
   flutter_handle_file:
     git:
-      url: https://github.com/nbonamy/flutter_handle_file
+      url: https://github.com/NiFNi/flutter_handle_file
       ref: master
 
   # The following adds the Cupertino Icons font to your application.
