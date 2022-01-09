@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_handle_file/flutter_handle_file.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +19,7 @@ class SharePage extends StatefulWidget {
 
 class _SharePageState extends State<SharePage> {
   StreamSubscription _intentDataStreamSubscription;
-  static const methodChannel = MethodChannel('app.channel.shared.data');
+  StreamSubscription _fileDataStreamSubscription;
   List<SharedMediaFile> _sharedFiles;
   bool _isActivelySharing = false;
 
@@ -61,10 +62,30 @@ class _SharePageState extends State<SharePage> {
   }
 
   void handleOpenWithFile() async {
-    var sharedData = await methodChannel.invokeMethod('getFilePath');
-    if (sharedData != null) {
-      uploadFileToPaperless(sharedData);
+    handleInitialFile();
+    initializeFileStreamHandling();
+  }
+
+  Future<Null> handleInitialFile() async {
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      String initialFile = await getInitialFile();
+      if (initialFile != null) {
+        uploadFileToPaperless(initialFile);
+      }
+    } on PlatformException catch (e) {
+      print(e);
     }
+  }
+
+  Future<Null> initializeFileStreamHandling() async {
+    _fileDataStreamSubscription = getFilesStream().listen((String file) {
+      if (file != null) {
+        uploadFileToPaperless(file);
+      }
+    }, onError: (err) {
+      print(err);
+    });
   }
 
   void uploadFileToPaperless(String path) async {
@@ -108,6 +129,7 @@ class _SharePageState extends State<SharePage> {
   @override
   void dispose() {
     _intentDataStreamSubscription.cancel();
+    _fileDataStreamSubscription.cancel();
     super.dispose();
   }
 
