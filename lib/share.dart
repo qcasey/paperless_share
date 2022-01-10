@@ -64,9 +64,11 @@ class _SharePageState extends State<SharePage> {
     var response = await Dio().post(
         _auth.user.formatRoute('api/documents/post_document/'),
         data: formData,
-        options: Options(headers: <String, String>{
-          'authorization': _auth.user.formatBasicAuth()
-        }));
+        options: _auth.user.token != "PAPERLESS_AUTO_LOGIN_USERNAME"
+            ? Options(headers: <String, String>{
+                'authorization': _auth.user.formatBasicAuth()
+              })
+            : "");
 
     if (response.statusCode == 200) {
       Fluttertoast.showToast(

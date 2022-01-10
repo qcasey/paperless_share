@@ -64,24 +64,34 @@ class AuthModel extends ChangeNotifier {
     @required String password,
   }) async {
     String _server = server;
-    String _username = username;
-    String _password = password;
-
+    String _token = "PAPERLESS_AUTO_LOGIN_USERNAME";
+    EncryptedSharedPreferences prefs = EncryptedSharedPreferences();
     User _newUser = User(server: _server);
 
-    var response = await Dio().post(_newUser.formatRoute('api/token/'),
-        data: {"username": username, "password": password});
+    // Check if PAPERLESS_AUTO_LOGIN_USERNAME turns off auth
+    // https://github.com/qcasey/paperless_share/issues/7
+    var authCheckResponse =
+        await Dio().get(_newUser.formatRoute('api/documents/'));
 
-    if (response.statusCode == 200) {
+    // Authorize for token, if required by server
+    if (authCheckResponse.statusCode == 401) {
+      var response = await Dio().post(_newUser.formatRoute('api/token/'),
+          data: {"username": username, "password": password});
+
+      if (response.statusCode != 200) {
+        return response.data;
+      }
+
       Map responseBody = response.data;
-      EncryptedSharedPreferences prefs = EncryptedSharedPreferences();
-      await prefs.setString("saved_server", _server);
-      await prefs.setString("saved_token", responseBody["token"]);
-
-      return "";
-    } else {
-      return response.data;
+      _token = responseBody["token"];
+    } else if (authCheckResponse.statusCode != 200) {
+      print(authCheckResponse.data);
+      return authCheckResponse.data;
     }
+
+    await prefs.setString("saved_token", _token);
+    await prefs.setString("saved_server", _server);
+    return "";
   }
 
   Future<void> logout() async {
