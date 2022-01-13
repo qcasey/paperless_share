@@ -57,14 +57,6 @@ class _PaperlessShareState extends State<PaperlessShare> {
           ChangeNotifierProvider<AuthModel>.value(value: _auth),
         ],
         child: Consumer<AuthModel>(builder: (context, model, child) {
-          var initialRoute = '/';
-          if (model?.user != null) {
-            if (model?.user.isValid())
-              initialRoute = '/share';
-            else
-              initialRoute = '/login';
-          }
-
           return MaterialApp(
             title: 'Paperless Share',
             theme: ThemeData(
@@ -78,9 +70,8 @@ class _PaperlessShareState extends State<PaperlessShare> {
               brightness: Brightness.dark,
               visualDensity: VisualDensity.adaptivePlatformDensity,
             ),
-            initialRoute: initialRoute,
+            initialRoute: model?.user.isValid() ? '/share' : '/login',
             routes: {
-              '/': (context) => new Container(),
               '/login': (context) => new LoginPage(),
               '/share': (context) => new SharePage(),
             },
