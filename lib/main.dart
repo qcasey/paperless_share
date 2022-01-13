@@ -6,7 +6,15 @@ import 'share.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-void main() {
+final AuthModel _auth = AuthModel();
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  try {
+    await _auth.loadSettings();
+  } catch (e) {
+    print("Error Loading Settings: $e");
+  }
   runApp(PaperlessShare());
 }
 
@@ -37,15 +45,8 @@ MaterialColor createMaterialColor(Color color) {
 }
 
 class _PaperlessShareState extends State<PaperlessShare> {
-  final AuthModel _auth = AuthModel();
-
   @override
   void initState() {
-    try {
-      _auth.loadSettings();
-    } catch (e) {
-      print("Error Loading Settings: $e");
-    }
     super.initState();
   }
 
@@ -55,38 +56,45 @@ class _PaperlessShareState extends State<PaperlessShare> {
         providers: [
           ChangeNotifierProvider<AuthModel>.value(value: _auth),
         ],
-        child: MaterialApp(
-          title: 'Paperless Share',
-          theme: ThemeData(
-            primarySwatch: createMaterialColor(Color(0xFF17541f)),
-            brightness: Brightness.light,
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-          ),
-          darkTheme: ThemeData(
-            primarySwatch: createMaterialColor(Color(0xFF17541f)),
-            accentColor: Colors.green,
-            brightness: Brightness.dark,
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-          ),
-          home: Consumer<AuthModel>(builder: (context, model, child) {
-            if (model?.user != null && model?.user.isValid())
-              return SharePage();
-            return LoginPage();
-          }),
-          routes: {
-            '/login': (context) => new LoginPage(),
-            '/share': (context) => new SharePage(),
-          },
-          localizationsDelegates: [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: [
-            const Locale('en', ''),
-            const Locale('de', ''),
-          ],
-        ));
+        child: Consumer<AuthModel>(builder: (context, model, child) {
+          var initialRoute = '/';
+          if (model?.user != null) {
+            if (model?.user.isValid())
+              initialRoute = '/share';
+            else
+              initialRoute = '/login';
+          }
+
+          return MaterialApp(
+            title: 'Paperless Share',
+            theme: ThemeData(
+              primarySwatch: createMaterialColor(Color(0xFF17541f)),
+              brightness: Brightness.light,
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+            ),
+            darkTheme: ThemeData(
+              primarySwatch: createMaterialColor(Color(0xFF17541f)),
+              accentColor: Colors.green,
+              brightness: Brightness.dark,
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+            ),
+            initialRoute: initialRoute,
+            routes: {
+              '/': (context) => new Container(),
+              '/login': (context) => new LoginPage(),
+              '/share': (context) => new SharePage(),
+            },
+            localizationsDelegates: [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: [
+              const Locale('en', ''),
+              const Locale('de', ''),
+            ],
+          );
+        }));
   }
 }

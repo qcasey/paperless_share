@@ -40,7 +40,7 @@ class AuthModel extends ChangeNotifier {
   String errorMessage = "";
   User _user;
 
-  void loadSettings() async {
+  Future<bool> loadSettings() async {
     var _prefs = EncryptedSharedPreferences();
 
     User _savedUser;
@@ -50,10 +50,12 @@ class AuthModel extends ChangeNotifier {
           token: await _prefs.getString("saved_token"));
     } catch (e) {
       print("User Not Found: $e");
+      return false;
     }
     _user = _savedUser;
 
     notifyListeners();
+    return true;
   }
 
   User get user => _user;
