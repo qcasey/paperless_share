@@ -27,14 +27,18 @@ dependencies:
     sdk: flutter
   
   intl: ^0.17.0
-  encrypted_shared_preferences: ^1.0.7
+  encrypted_shared_preferences: ^3.0.0
   http: ^0.13.1
-  provider: ^5.0.0
-  regexed_validator: ^1.0.4
+  provider: ^6.0.2
+  regexed_validator: ^2.0.0+1
   receive_sharing_intent: ^1.4.2
   dio: ^4.0.0
   fluttertoast: ^8.0.6
   flutter_spinkit: ^5.0.0
+  flutter_handle_file:
+    git:
+      url: https://github.com/NiFNi/flutter_handle_file
+      ref: master
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -44,10 +48,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_launcher_icons: 
-    git:
-      url: https://github.com/knyghtryda/flutter_launcher_icons
-      ref: scaling
+  flutter_launcher_icons: ^0.9.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
