@@ -138,7 +138,7 @@ class _SharePageState extends State<SharePage> {
     return Scaffold(
         appBar: AppBar(
           title: Text("Paperless Share"),
-          actions: [_actionButton()],
+          actions: [_logoutButton()],
         ),
         body: Center(
           child: FractionallySizedBox(child: _bodyContent()),
@@ -166,7 +166,7 @@ class _SharePageState extends State<SharePage> {
         )));
   }
 
-  Widget _actionButton() {
+  Widget _logoutButton() {
     final _auth = Provider.of<AuthModel>(context, listen: true);
 
     if (_isActivelySharing) {
