@@ -71,7 +71,7 @@ class _SharePageState extends State<SharePage> {
     try {
       String initialFile = await getInitialFile();
       if (initialFile != null) {
-        uploadFileToPaperless(initialFile);
+        uploadFileToPaperless(Uri.parse(initialFile).toFilePath());
       }
     } on PlatformException catch (e) {
       print(e);
@@ -81,7 +81,7 @@ class _SharePageState extends State<SharePage> {
   Future<Null> initializeFileStreamHandling() async {
     _fileDataStreamSubscription = getFilesStream().listen((String file) {
       if (file != null) {
-        uploadFileToPaperless(file);
+        uploadFileToPaperless(Uri.parse(file).toFilePath());
       }
     }, onError: (err) {
       print(err);
