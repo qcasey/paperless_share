@@ -1,0 +1,3 @@
+Thanks @NiFNi for your help and contribution!
+* Add App as handler for PDFs and similar files, uploading on open (@NiFNi #12)
+* Select from your tags to apply to documents
