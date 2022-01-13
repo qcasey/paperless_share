@@ -12,5 +12,7 @@
     "fileUploaded": "Datei hochgeladen.",
     "readyToUpload": "Bereit zum Hochladen.",
     "shareInstructions": "Wählen Sie im Menü \"Freigeben\" die Option \"Paperless Share\", um Bilder und Dokumente hochzuladen.",
-    "serverInstructions": "Ihr Server wird versuchen, es automatisch zu verarbeiten. Es sollte in wenigen Augenblicken erscheinen."
+    "serverInstructions": "Ihr Server wird versuchen, es automatisch zu verarbeiten. Es sollte in wenigen Augenblicken erscheinen.",
+    "tagIntro": "Wählen Sie die Tags aus, die für alle hochgeladenen Dokumente verwendet werden sollen.",
+    "tagConfirm": "Tags bestätigen"
 }
