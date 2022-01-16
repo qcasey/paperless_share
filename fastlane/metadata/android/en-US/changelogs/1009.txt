@@ -1,0 +1,1 @@
+This reverts a change that caused a blank screen on startup.
