@@ -338,6 +338,7 @@ class _TagAlertDialogState extends State<TagAlertDialog> {
     }
 
     return AlertDialog(
+      scrollable: true,
       title: new Text("Paperless Tag"),
       content: Column(mainAxisSize: MainAxisSize.min, children: [
         Text(AppLocalizations.of(context).tagIntro),
