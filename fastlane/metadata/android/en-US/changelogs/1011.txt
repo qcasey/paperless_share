@@ -1,0 +1,1 @@
+Ensures tags list is scrollable.
