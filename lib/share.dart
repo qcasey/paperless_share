@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
@@ -9,8 +10,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_handle_file/flutter_handle_file.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:receive_sharing_intent/receive_sharing_intent.dart';
+import 'package:flutter_html_to_pdf/flutter_html_to_pdf.dart';
 
 import 'model/auth.dart';
 
@@ -22,44 +25,99 @@ class SharePage extends StatefulWidget {
 class _SharePageState extends State<SharePage> {
   StreamSubscription _intentDataStreamSubscription;
   StreamSubscription _fileDataStreamSubscription;
-  List<SharedMediaFile> _sharedFiles;
+  List<String> _sharedFiles;
   bool _isActivelySharing = false;
 
   void uploadDocuments() {
-    if (_isActivelySharing) {
-      for (var f in _sharedFiles) {
-        uploadFileToPaperless(f.path);
-      }
+    if (!_isActivelySharing) return;
+
+    for (var file in _sharedFiles) {
+      uploadFileToPaperless(file);
     }
   }
 
   @override
   void initState() {
     super.initState();
-    handleSharedFile();
+    handleShare();
     handleOpenWithFile();
   }
 
-  void handleSharedFile() {
+  void handleShareError(String errorText) {
+    print(errorText);
+    Fluttertoast.showToast(
+      msg: errorText,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+    );
+  }
+
+  void prepareSharedText(String sharedText) async {
+    print(sharedText);
+    if (sharedText == null || sharedText.length == 0) return;
+
+    final Uri url = Uri.parse(sharedText);
+    if (url.host != '') {
+      var response = await Dio().get(url.toString());
+      if (response.statusCode != 200) {
+        return handleShareError(response.statusMessage);
+      }
+
+      Random random = new Random();
+      final tempDir = await getTemporaryDirectory();
+      var generatedPdfFile = await FlutterHtmlToPdf.convertFromHtmlContent(
+          response.data, tempDir.path, url.host);
+      print(generatedPdfFile.path);
+      setState(() {
+        _sharedFiles = List<String>.filled(1, generatedPdfFile.path);
+        _isActivelySharing = true;
+      });
+      uploadDocuments();
+    }
+  }
+
+  void handleShare() {
     // For sharing images coming from outside the app while the app is in the memory
     _intentDataStreamSubscription = ReceiveSharingIntent.getMediaStream()
         .listen((List<SharedMediaFile> value) {
+      var filePaths = List<String>.empty(growable: true);
+      for (var f in value) {
+        filePaths.add(f.path);
+      }
       setState(() {
-        _sharedFiles = value;
-        _isActivelySharing = _sharedFiles != null && _sharedFiles.isNotEmpty;
+        _sharedFiles = filePaths;
+        _isActivelySharing = filePaths.isNotEmpty;
       });
       uploadDocuments();
     }, onError: (err) {
-      print("getIntentDataStream error: $err");
+      handleShareError(err.toString());
     });
 
     // For sharing images coming from outside the app while the app is closed
     ReceiveSharingIntent.getInitialMedia().then((List<SharedMediaFile> value) {
+      var filePaths = List<String>.empty(growable: true);
+      for (var f in value) {
+        filePaths.add(f.path);
+      }
       setState(() {
-        _sharedFiles = value;
-        _isActivelySharing = _sharedFiles != null && _sharedFiles.isNotEmpty;
+        _sharedFiles = filePaths;
+        _isActivelySharing = filePaths.isNotEmpty;
       });
       uploadDocuments();
+    });
+
+    // For sharing or opening urls/text coming from outside the app while the app is in the memory
+    _intentDataStreamSubscription =
+        ReceiveSharingIntent.getTextStream().listen((String value) {
+      prepareSharedText(value);
+    }, onError: (err) {
+      handleShareError(err.toString());
+    });
+
+    // For sharing or opening urls/text coming from outside the app while the app is closed
+    ReceiveSharingIntent.getInitialText().then((String value) {
+      prepareSharedText(value);
     });
   }
 
@@ -76,7 +134,7 @@ class _SharePageState extends State<SharePage> {
         uploadFileToPaperless(Uri.parse(initialFile).toFilePath());
       }
     } on PlatformException catch (e) {
-      print(e);
+      handleShareError(e.toString());
     }
   }
 
@@ -86,7 +144,7 @@ class _SharePageState extends State<SharePage> {
         uploadFileToPaperless(Uri.parse(file).toFilePath());
       }
     }, onError: (err) {
-      print(err);
+      handleShareError(err.toString());
     });
   }
 
@@ -106,7 +164,6 @@ class _SharePageState extends State<SharePage> {
 
   void uploadFileToPaperless(String path) async {
     final _auth = Provider.of<AuthModel>(context, listen: false);
-    print("Uploading " + path + " to " + _auth.user.server);
 
     // Check that tags still exist
     List<int> postTags = List<int>.empty(growable: true);
@@ -124,7 +181,7 @@ class _SharePageState extends State<SharePage> {
         }
       }
     } catch (e) {
-      print(e);
+      handleShareError(e.toString());
     }
 
     var formData = FormData.fromMap({
@@ -142,14 +199,11 @@ class _SharePageState extends State<SharePage> {
           }));
     } on DioError catch (e) {
       response = e.response;
-      print(e);
-      print(response.data.toString());
+      return handleShareError("Error: ${response.data.toString()}");
     }
 
     Fluttertoast.showToast(
-      msg: response.statusCode == 200
-          ? AppLocalizations.of(context).fileUploaded
-          : response.data.toString(),
+      msg: AppLocalizations.of(context).fileUploaded,
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.BOTTOM,
       timeInSecForIosWeb: 1,

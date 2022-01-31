@@ -39,6 +39,8 @@ dependencies:
     git:
       url: https://github.com/NiFNi/flutter_handle_file
       ref: master
+  flutter_html_to_pdf: ^0.7.0
+  path_provider: ^2.0.8
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
